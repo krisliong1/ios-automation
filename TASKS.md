@@ -20,6 +20,7 @@
 - [x] AI 翻译系统（多语言→中文）
 - [x] Shadowrocket 自动配置
 - [x] 设备信息检测系统
+- [x] macOS 环境自动配置（Xcode + SSH + Terminal）
 - [x] 项目配置文件（节省 token）
 - [x] 快速命令系统
 

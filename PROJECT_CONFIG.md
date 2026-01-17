@@ -38,7 +38,12 @@
 - **功能**: 识别 iPhone/iPad/Mac 型号和系统
 - **支持**: 150+ 设备型号
 
-### 5. 其他模块
+### 5. macOS 环境配置（新增）
+- **位置**: `examples/SystemSetup/MacOSEnvironmentManager.swift`
+- **功能**: 自动检测 Mac 并配置开发环境
+- **特性**: Xcode + SSH + Terminal 一键配置
+
+### 6. 其他模块
 - iCloud 同步: `examples/CloudSync/iCloudSyncManager.swift`
 - 蓝牙管理: `examples/HardwareConnection/BluetoothManager.swift`
 - 网络连接: `examples/HardwareConnection/NetworkConnectionManager.swift`
