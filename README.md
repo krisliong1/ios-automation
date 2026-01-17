@@ -6,19 +6,29 @@
 
 ```
 ios-automation/
-├── docs/                                    # 文档目录
-│   └── iOS-Automation-Complete-Guide.md    # 完整开发指南（70+ 页）
-├── examples/                                # 示例代码
-│   ├── AppIntents/                         # App Intents 示例
-│   │   ├── AddTaskIntent.swift             # 添加任务 Intent
-│   │   └── GetTasksIntent.swift            # 获取任务列表 Intent
-│   ├── Models/                             # 数据模型
-│   │   └── Task.swift                      # 任务模型
-│   ├── URLHandler/                         # URL Scheme 处理
-│   │   └── URLHandler.swift                # URL 处理器
-│   └── Shortcuts/                          # 快捷指令示例
-│       └── shortcuts-examples.md           # 快捷指令配置示例
-└── README.md                               # 项目说明（本文件）
+├── docs/                                       # 文档目录
+│   └── iOS-Automation-Complete-Guide.md       # 完整开发指南（70+ 页）
+├── examples/                                   # 示例代码
+│   ├── AppIntents/                            # App Intents 示例
+│   │   ├── AddTaskIntent.swift                # 添加任务 Intent
+│   │   ├── GetTasksIntent.swift               # 获取任务列表 Intent
+│   │   ├── GetTodayTasksIntent.swift          # 获取今日任务 Intent
+│   │   ├── TaskStatsIntent.swift              # 任务统计 Intent
+│   │   └── CompleteTaskIntent.swift           # 完成任务 Intent
+│   ├── AppEntryPoint/                         # App 入口示例
+│   │   └── AutomationHelperApp.swift          # 完整的 App 入口文件
+│   ├── Models/                                # 数据模型
+│   │   └── Task.swift                         # 任务模型（SwiftData）
+│   ├── URLHandler/                            # URL Scheme 处理
+│   │   └── URLHandler.swift                   # URL 处理器
+│   ├── XcodeProject/                          # Xcode 项目配置
+│   │   └── Info.plist                         # Info.plist 配置示例
+│   └── Shortcuts/                             # 快捷指令示例
+│       └── shortcuts-examples.md              # 快捷指令配置示例
+├── QUICKSTART.md                              # 快速开始指南（15分钟上手）
+├── TROUBLESHOOTING.md                         # 故障排查指南
+├── CODE_VERIFICATION.md                       # 代码验证清单
+└── README.md                                  # 项目说明（本文件）
 ```
 
 ## 🚀 快速开始
@@ -33,24 +43,34 @@ ios-automation/
 - ✅ **实战案例** - 5 个真实场景示例
 - ✅ **最佳实践** - 性能优化、调试技巧、FAQ
 
-### 2. 使用示例代码
+### 2. 15 分钟快速上手
+
+**推荐路径**：跟随 [快速开始指南](QUICKSTART.md) 在 15 分钟内创建第一个 iOS 自动化应用！
+
+### 3. 使用示例代码
 
 所有示例代码位于 `examples/` 目录：
 
-#### App Intents 示例
+#### App Intents 示例（5 个完整实现）
 
 ```swift
 // 复制到你的 Xcode 项目中
-examples/AppIntents/AddTaskIntent.swift      // 添加任务功能
-examples/AppIntents/GetTasksIntent.swift     // 获取任务列表
+examples/AppIntents/AddTaskIntent.swift         // 添加任务功能
+examples/AppIntents/GetTasksIntent.swift        // 获取任务列表
+examples/AppIntents/GetTodayTasksIntent.swift   // 获取今日任务
+examples/AppIntents/TaskStatsIntent.swift       // 任务统计
+examples/AppIntents/CompleteTaskIntent.swift    // 完成任务
 ```
 
 **使用步骤**:
 1. 在 Xcode 中创建新项目
-2. 将示例代码文件添加到项目
-3. 运行项目（⌘ + R）
-4. 打开快捷指令 App，搜索你的 App 名称
-5. 开始使用！
+2. 复制所有示例文件到项目
+3. 配置 Info.plist（可选，用于 URL Scheme）
+4. 运行项目（⌘ + R）
+5. 打开快捷指令 App，搜索你的 App 名称
+6. 开始使用！
+
+详细步骤见 [快速开始指南](QUICKSTART.md)
 
 #### URL Scheme 示例
 
@@ -64,7 +84,7 @@ examples/URLHandler/URLHandler.swift
 2. 添加 URL Scheme: `automationhelper`
 3. 集成 URLHandler 到你的 App
 
-### 3. 快捷指令示例
+### 4. 快捷指令示例
 
 查看 [快捷指令配置示例](examples/Shortcuts/shortcuts-examples.md)，包含：
 
@@ -73,6 +93,12 @@ examples/URLHandler/URLHandler.swift
 - 批量完成任务
 - 任务统计报告
 - URL Scheme 调用模板
+
+## 🆘 需要帮助？
+
+- **刚开始？** 查看 [快速开始指南](QUICKSTART.md)（15 分钟上手）
+- **遇到问题？** 查看 [故障排查指南](TROUBLESHOOTING.md)
+- **验证代码？** 查看 [代码验证清单](CODE_VERIFICATION.md)
 
 ## 📖 主要内容
 
