@@ -21,6 +21,10 @@ class KrisAIFixer: ObservableObject {
     private let codeGenerator = AICodeGenerator()
     private let problemAnalyzer = ProblemAnalyzer()
     private let validator = SolutionValidator()
+    private let translator = AITranslator()
+
+    // 是否启用自动翻译（默认启用）
+    var enableAutoTranslation = true
 
     // iOS 17+ 使用 SwiftData，iOS 16 使用 JSON
     @available(iOS 17.0, macOS 14.0, *)
@@ -70,7 +74,14 @@ class KrisAIFixer: ObservableObject {
             var generatedSolutions: [Solution] = []
 
             for (index, result) in searchResults.prefix(5).enumerated() {
-                let solution = try await generateSolution(from: result, for: problem)
+                var solution = try await generateSolution(from: result, for: problem)
+
+                // 自动翻译解决方案
+                if enableAutoTranslation {
+                    solution = await translator.translateSolution(solution)
+                    print("🌐 解决方案已翻译")
+                }
+
                 generatedSolutions.append(solution)
 
                 print("💡 解决方案 \(index + 1): \(solution.title)")
@@ -333,6 +344,11 @@ class KrisAIFixer: ObservableObject {
             }
         }
 
+        // 如果启用翻译，先翻译内容
+        if enableAutoTranslation {
+            content = await translator.smartTranslate(content)
+        }
+
         // 分析内容并提取解决方案
         let steps = extractSolutionSteps(from: content)
         let code = extractCodeSnippets(from: content)
@@ -445,6 +461,22 @@ class KrisAIFixer: ObservableObject {
         }
 
         return snippets
+    }
+
+    /// 翻译代码片段（只翻译注释，保持代码语法）
+    private func translateCodeSnippets(_ snippets: [CodeSnippet]) async -> [CodeSnippet] {
+        var translatedSnippets: [CodeSnippet] = []
+
+        for snippet in snippets {
+            if enableAutoTranslation {
+                let translated = await translator.translateCodeSnippet(snippet)
+                translatedSnippets.append(translated)
+            } else {
+                translatedSnippets.append(snippet)
+            }
+        }
+
+        return translatedSnippets
     }
 
     /// 生成代码步骤说明
@@ -925,21 +957,27 @@ class AICodeGenerator {
 
     private func generateVMDetectionBypassCode() -> String {
         return """
-        // AI 生成：虚拟机检测绕过代码
+        // AI 生成代码：虚拟机检测绕过
+        // AI Generated Code: Virtual Machine Detection Bypass
         import Foundation
 
         func checkAndBypassVMDetection() -> Bool {
-            // 检查 kern.hv_vmm_present
+            // 检查 kern.hv_vmm_present sysctl 参数
+            // Check kern.hv_vmm_present sysctl parameter
             var value: Int32 = 0
             var size = MemoryLayout<Int32>.size
             sysctlbyname("kern.hv_vmm_present", &value, &size, nil, 0)
 
             if value != 0 {
                 print("⚠️ 检测到虚拟机环境")
-                print("建议使用 VMHide 内核扩展")
+                print("⚠️ Virtual machine environment detected")
+                print("建议: 使用 VMHide 内核扩展")
+                print("Recommendation: Use VMHide kernel extension")
                 return false
             }
 
+            print("✅ 未检测到虚拟机")
+            print("✅ No virtual machine detected")
             return true
         }
         """
@@ -947,7 +985,8 @@ class AICodeGenerator {
 
     private func generateBluetoothFixCode() -> String {
         return """
-        // AI 生成：蓝牙问题修复代码
+        // AI 生成代码：蓝牙连接修复
+        // AI Generated Code: Bluetooth Connection Fix
         import CoreBluetooth
 
         class BluetoothFixer: NSObject, CBCentralManagerDelegate {
@@ -955,14 +994,25 @@ class AICodeGenerator {
 
             override init() {
                 super.init()
+                // 初始化蓝牙中央管理器
+                // Initialize Bluetooth central manager
                 centralManager = CBCentralManager(delegate: self, queue: nil)
             }
 
             func centralManagerDidUpdateState(_ central: CBCentralManager) {
-                if central.state == .poweredOn {
-                    print("✅ 蓝牙已就绪")
-                } else {
+                switch central.state {
+                case .poweredOn:
+                    print("✅ 蓝牙已就绪，可以开始扫描")
+                    print("✅ Bluetooth is ready, can start scanning")
+                case .poweredOff:
+                    print("⚠️ 蓝牙已关闭，请打开蓝牙")
+                    print("⚠️ Bluetooth is off, please turn on Bluetooth")
+                case .unauthorized:
+                    print("⚠️ 蓝牙权限被拒绝")
+                    print("⚠️ Bluetooth permission denied")
+                default:
                     print("⚠️ 蓝牙状态: \\(central.state.rawValue)")
+                    print("⚠️ Bluetooth state: \\(central.state.rawValue)")
                 }
             }
         }
@@ -971,19 +1021,37 @@ class AICodeGenerator {
 
     private func generateiCloudFixCode() -> String {
         return """
-        // AI 生成：iCloud 同步问题修复代码
+        // AI 生成代码：iCloud 同步修复
+        // AI Generated Code: iCloud Sync Fix
         import Foundation
 
         func fixiCloudSync() {
-            // 检查 iCloud 可用性
+            // 检查 iCloud 容器可用性
+            // Check iCloud container availability
             if let containerURL = FileManager.default.url(
                 forUbiquityContainerIdentifier: nil
             ) {
                 print("✅ iCloud 可用")
+                print("✅ iCloud is available")
                 print("容器路径: \\(containerURL)")
+                print("Container path: \\(containerURL)")
+
+                // 验证容器可访问性
+                // Verify container accessibility
+                let testFile = containerURL.appendingPathComponent("test.txt")
+                do {
+                    try "测试".write(to: testFile, atomically: true, encoding: .utf8)
+                    print("✅ iCloud 容器可写")
+                    print("✅ iCloud container is writable")
+                } catch {
+                    print("❌ iCloud 容器写入失败: \\(error)")
+                    print("❌ iCloud container write failed: \\(error)")
+                }
             } else {
                 print("❌ iCloud 不可用")
+                print("❌ iCloud is not available")
                 print("请在设置中登录 iCloud")
+                print("Please sign in to iCloud in Settings")
             }
         }
         """
@@ -991,18 +1059,22 @@ class AICodeGenerator {
 
     private func generateGenericSolutionCode(_ problem: Problem) -> String {
         return """
-        // AI 生成：通用解决方案
-        // 问题: \(problem.description)
-        // 类型: \(problem.category.rawValue)
+        // AI 生成代码：通用解决方案
+        // AI Generated Code: Generic Solution
+        // 问题描述 Problem: \(problem.description)
+        // 问题类型 Category: \(problem.category.rawValue)
 
         import Foundation
 
         func solveProblem() {
-            print("开始解决问题...")
+            print("🔧 开始解决问题...")
+            print("🔧 Starting to solve the problem...")
 
             // TODO: 根据具体问题实现解决方案
+            // TODO: Implement solution based on specific problem
 
-            print("问题已解决")
+            print("✅ 问题已解决")
+            print("✅ Problem solved")
         }
         """
     }
