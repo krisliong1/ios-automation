@@ -1,0 +1,10 @@
+# iOS Automation - Cross-Platform Terminal System
+# Dependencies for cross-platform terminal automation
+
+# Core utilities
+python>=3.8
+pathlib>=1.0.1
+
+# Optional: For advanced features
+# paramiko>=2.7.2  # SSH support
+# psutil>=5.8.0    # System and process utilities
