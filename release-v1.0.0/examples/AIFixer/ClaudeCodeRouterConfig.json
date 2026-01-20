@@ -1,0 +1,98 @@
+{
+  "// 说明": "claude-code-router 配置文件",
+  "// 文档": "https://github.com/musistudio/claude-code-router",
+
+  "server": {
+    "port": 3456,
+    "host": "localhost"
+  },
+
+  "routes": {
+    "default": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "description": "默认路由 - 标准任务"
+    },
+
+    "webSearch": {
+      "provider": "openrouter",
+      "model": "anthropic/claude-3.5-sonnet",
+      "apiKey": "${OPENROUTER_API_KEY}",
+      "features": ["web-search"],
+      "description": "Web 搜索路由 - 需要搜索时使用"
+    },
+
+    "background": {
+      "provider": "deepseek",
+      "model": "deepseek-chat",
+      "apiKey": "${DEEPSEEK_API_KEY}",
+      "temperature": 0.5,
+      "description": "后台任务路由 - 快速、便宜"
+    },
+
+    "think": {
+      "provider": "anthropic",
+      "model": "claude-opus-4",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "temperature": 0.8,
+      "maxTokens": 8192,
+      "description": "深度思考路由 - 复杂问题"
+    },
+
+    "longContext": {
+      "provider": "anthropic",
+      "model": "claude-opus-4",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "maxTokens": 200000,
+      "description": "长文本路由 - 大文件分析"
+    },
+
+    "local": {
+      "provider": "ollama",
+      "model": "llama3",
+      "baseURL": "http://localhost:11434",
+      "description": "本地路由 - 离线使用"
+    },
+
+    "fast": {
+      "provider": "deepseek",
+      "model": "deepseek-chat",
+      "apiKey": "${DEEPSEEK_API_KEY}",
+      "temperature": 0.3,
+      "maxTokens": 2048,
+      "description": "快速路由 - 简单任务"
+    }
+  },
+
+  "fallback": {
+    "sequence": ["default", "local"],
+    "description": "降级顺序：默认 -> 本地"
+  },
+
+  "logging": {
+    "level": "info",
+    "file": "~/.ccr/logs/router.log",
+    "maxSize": "10MB",
+    "maxFiles": 5
+  },
+
+  "monitoring": {
+    "enabled": true,
+    "healthCheck": {
+      "interval": 30,
+      "endpoints": [
+        "https://api.anthropic.com",
+        "https://openrouter.ai",
+        "https://api.deepseek.com",
+        "http://localhost:11434"
+      ]
+    }
+  },
+
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "maxSize": "100MB"
+  }
+}
