@@ -102,6 +102,8 @@ dependencies: [
 
 一个强大的 Python 跨平台终端自动化系统，支持多种操作系统间的命令转换和执行。
 
+**🎯 胶水编程 (Glue Coding)** - 使用成熟的 GitHub 开源库（Fabric 14K+ ⭐），只写最少的集成代码！
+
 ## 🌟 核心功能
 
 ### 1. **多系统支持**
@@ -110,27 +112,35 @@ dependencies: [
 - ✅ **iOS Terminal** (libimobiledevice)
 - ✅ **PowerShell** (Windows)
 
-### 2. **智能命令转换**
+### 2. **Fabric 胶水编程 - SSH 远程执行** 🆕
+- ✅ 使用 **Fabric (14K+ ⭐)** 进行 SSH 命令执行
+- ✅ 只写 ~200 行胶水代码（节省 80% 代码量）
+- ✅ 自动保存命令历史到 **iCloud Drive**
+- ✅ 支持多主机管理和批量执行
+- ✅ 配置自动从 iCloud 加载
+
+### 3. **智能命令转换**
 - 自动在不同操作系统之间转换命令
 - 支持常用命令的跨平台翻译
 - 示例：`ls -la` (Linux) ↔ `Get-ChildItem -Force` (PowerShell)
 
-### 3. **路径管理**
+### 4. **路径管理**
 - 跨系统路径转换（POSIX ↔ Windows）
 - 统一路径管理接口
 - 自动处理路径分隔符
 
-### 4. **命令执行**
+### 5. **命令执行**
 - 同步/异步命令执行
 - 实时输出捕获
 - 错误处理和日志记录
+- iCloud 自动同步
 
 ## 🚀 快速使用（终端自动化）
 
 ### 安装
 
 ```bash
-# 安装依赖
+# 安装依赖（包含 Fabric）
 pip install -r requirements.txt
 
 # 对于 iOS 支持（可选）
@@ -138,7 +148,35 @@ brew install libimobiledevice  # macOS
 apt-get install libimobiledevice-utils  # Linux
 ```
 
-### 基础使用
+### 方式 1: Fabric 胶水编程（推荐）🆕
+
+**3 行代码远程执行命令 + 自动保存到 iCloud！**
+
+```python
+from src.fabric_glue import FabricGlue
+
+# 1. 创建实例（自动从 iCloud 加载配置）
+glue = FabricGlue("~/Library/Mobile Documents/com~apple~CloudDocs/kris-server")
+
+# 2. 添加服务器（首次需要）
+glue.add_host("my-server", "192.168.1.100", "user", "~/.ssh/id_rsa")
+
+# 3. 执行命令 - 就这么简单！
+result = glue.execute("my-server", "ls -la")
+# ✅ 命令已执行
+# ✅ 结果已保存到 iCloud
+# ✅ 可在任何设备查看历史
+
+# 批量执行
+results = glue.execute_on_all("uptime")  # 在所有服务器执行
+
+# 查看历史
+history = glue.get_history()  # 从 iCloud 读取所有历史
+```
+
+📖 **详细指南**: [FABRIC_QUICK_START.md](FABRIC_QUICK_START.md) | [胶水编程哲学](GLUE_CODING_GUIDE.md)
+
+### 方式 2: 本地终端管理
 
 ```python
 from src.terminal_manager import TerminalManager
@@ -208,6 +246,7 @@ ios-automation/
 │
 ├── # 终端自动化系统 (Python)
 ├── src/
+│   ├── fabric_glue.py                   # 🆕 Fabric 胶水编程（SSH 远程执行）
 │   ├── terminal_manager.py              # 终端管理器
 │   ├── command_translator.py            # 命令转换器
 │   ├── macos_terminal.py                # macOS 终端
@@ -217,10 +256,13 @@ ios-automation/
 │   ├── path_manager.py                  # 路径管理
 │   └── terminal_base.py                 # 基类
 ├── examples/
+│   ├── fabric_glue_example.py           # 🆕 Fabric 使用示例
 │   ├── basic_usage.py                   # 基础示例
 │   └── advanced_usage.py                # 高级示例
+├── FABRIC_QUICK_START.md                # 🆕 Fabric 快速开始指南
+├── GLUE_CODING_GUIDE.md                 # 🆕 胶水编程完整指南
 ├── main.py                              # 主程序
-├── requirements.txt                     # Python 依赖
+├── requirements.txt                     # Python 依赖（含 Fabric）
 │
 ├── # 共享文档和配置
 ├── README.md                            # 本文件
@@ -252,17 +294,22 @@ ios-automation/
 
 ## 🔧 技术栈
 
-### iOS AI 管理器
+### iOS AI 管理器（胶水编程）
 - **语言**: Swift 5.9+
 - **平台**: iOS 16+, macOS 13+
 - **框架**: SwiftUI + SwiftData + App Intents
 - **并发**: Async/await, @MainActor
-- **依赖**: IOSSecuritySuite, Reachability.swift
+- **胶水库**:
+  - **IOSSecuritySuite** (2.6K+ ⭐) - iOS 安全检测
+  - **Reachability.swift** (7.9K+ ⭐) - 网络监控
+  - **Apple Translation Framework** (官方) - 离线翻译
 
-### 终端自动化系统
+### 终端自动化系统（胶水编程）
 - **语言**: Python 3.8+
 - **平台**: macOS, Linux, iOS, Windows
-- **依赖**: subprocess, pathlib, json, logging
+- **胶水库**:
+  - **Fabric** (14K+ ⭐) - SSH 远程执行 🆕
+- **标准库**: subprocess, pathlib, json, logging
 - **可选**: libimobiledevice (iOS 支持)
 
 ---
@@ -287,6 +334,26 @@ ios-automation/
 | 路径转换 | POSIX ↔ Windows |
 | 执行模式 | 同步 + 异步 |
 
+### 胶水编程效益 🆕
+
+**代码量对比**：
+
+| 组件 | 自己写 | 胶水编程 | 节省 | GitHub 库 |
+|------|--------|---------|------|----------|
+| SSH 执行 | ~1000 行 | ~200 行 | **80%** | Fabric (14K+ ⭐) |
+| iOS 安全检测 | ~500 行 | ~50 行 | **90%** | IOSSecuritySuite (2.6K+ ⭐) |
+| 网络监控 | ~300 行 | ~30 行 | **90%** | Reachability.swift (7.9K+ ⭐) |
+| 翻译服务 | ~400 行 | ~40 行 | **90%** | Apple Translation (官方) |
+| **总计** | **~2200 行** | **~320 行** | **85%** | - |
+
+**质量提升**：
+- ✅ 使用经过验证的开源库
+- ✅ 社区维护，持续更新
+- ✅ 减少 Bug，提高稳定性
+- ✅ 企业级功能，零成本获得
+
+📖 **了解更多**: [GLUE_CODING_GUIDE.md](GLUE_CODING_GUIDE.md)
+
 ---
 
 ## 🎯 使用场景
@@ -299,6 +366,9 @@ ios-automation/
 - ✅ Claude App 集成
 
 ### 终端自动化系统
+- ✅ **SSH 远程服务器管理**（Fabric 胶水编程）🆕
+- ✅ **批量服务器运维**（一键在多台服务器执行）🆕
+- ✅ **iCloud 命令历史同步**（跨设备查看）🆕
 - ✅ 跨平台自动化脚本
 - ✅ 远程设备管理（iOS/Android）
 - ✅ CI/CD 流水线集成
