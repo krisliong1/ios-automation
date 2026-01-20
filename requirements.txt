@@ -5,6 +5,9 @@
 python>=3.8
 pathlib>=1.0.1
 
+# Glue Coding Libraries - Using mature open-source projects
+fabric>=3.0.0  # SSH command execution (14K+ stars) - 胶水编程核心库
+
 # Optional: For advanced features
-# paramiko>=2.7.2  # SSH support
+# paramiko>=2.7.2  # SSH support (included with Fabric)
 # psutil>=5.8.0    # System and process utilities
