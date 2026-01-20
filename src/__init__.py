@@ -1,0 +1,7 @@
+"""
+iOS Automation - Cross-Platform Terminal System
+Multi-system terminal automation with command translation
+"""
+
+__version__ = "1.0.0"
+__author__ = "Claude"

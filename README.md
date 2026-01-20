@@ -1,14 +1,29 @@
-# iOS 自动化 AI 管理器
+# iOS 自动化工具集
 
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](https://github.com/krisliong1/ios-automation/releases)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
-[![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://developer.apple.com)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://developer.apple.com)
 
-**首个集成 AI 管理、安全检测、网络管理和翻译系统的 iOS 自动化工具包。**
-
-🎉 **v1.0.0 正式发布！** [下载最新版本](https://github.com/krisliong1/ios-automation/releases) | [5分钟快速开始](QUICK_START_GUIDE.md) | [完整文档](RELEASE_NOTES.md)
+**完整的跨平台自动化工具集，包含 iOS AI 管理器和终端自动化系统。**
 
 ---
+
+## 📦 项目包含
+
+本仓库包含两个强大的自动化工具：
+
+### 1️⃣ [iOS 自动化 AI 管理器](#ios-自动化-ai-管理器) (Swift)
+首个集成 AI 管理、安全检测、网络管理和翻译系统的 iOS 工具包
+
+### 2️⃣ [跨平台终端自动化系统](#跨平台终端自动化系统) (Python)
+支持 macOS、Linux、iOS 和 Windows 系统间的命令转换和执行
+
+---
+
+# iOS 自动化 AI 管理器
+
+🎉 **v1.0.0 正式发布！** [下载最新版本](https://github.com/krisliong1/ios-automation/releases) | [5分钟快速开始](QUICK_START_GUIDE.md) | [完整文档](RELEASE_NOTES.md)
 
 ## ✨ 核心功能
 
@@ -41,13 +56,9 @@
 - ✅ 离线词典支持
 - ✅ **性能提升 80-90%，代码减少 15%**
 
----
-
-## 🚀 3 种使用方式
+## 🚀 快速使用（iOS AI 管理器）
 
 ### 方式 1: Claude iOS App（推荐）⭐⭐⭐⭐⭐
-
-**5 分钟设置**，无需编写代码：
 
 ```bash
 # 1. 克隆仓库
@@ -66,18 +77,13 @@ cd ios-automation/
 "帮我解决：网络连接失败"
 ```
 
-📖 **详细步骤**: [QUICK_START_GUIDE.md](QUICK_START_GUIDE.md)
+📖 **详细文档**: [QUICK_START_GUIDE.md](QUICK_START_GUIDE.md) | [完整文档索引](#📚-完整文档-ios-ai)
 
 ### 方式 2: Xcode 项目集成
 
 ```bash
-# 复制核心文件到你的项目
 cp Sources/iOSAutomation/*.swift /path/to/YourProject/
-
-# 添加依赖（参考 Package.swift）
 ```
-
-📖 **详细步骤**: [HOW_TO_USE.md](HOW_TO_USE.md)
 
 ### 方式 3: Swift Package Manager
 
@@ -92,22 +98,139 @@ dependencies: [
 
 ---
 
-## 📦 v1.0.0 包含的内容
+# 跨平台终端自动化系统
 
-| 类别 | 数量 | 大小 | 说明 |
-|------|------|------|------|
-| **核心模块** | 4 | 64.6 KB | AI Manager, Security, Network, Translation |
-| **AI Fixer** | 5 | 88.6 KB | Kris AI Fixer + 集成示例 |
-| **示例模块** | 13+ | - | 系统检测、网络工具、硬件连接等 |
-| **文档** | 22 | 350+ KB | 完整指南、API 参考、教程 |
-| **外部依赖** | 5 | 10500+ ⭐ | 成熟开源库 |
-| **总计** | **53+** | **~500 KB** | 完整工具包 |
+一个强大的 Python 跨平台终端自动化系统，支持多种操作系统间的命令转换和执行。
 
-查看完整清单：[TOOLS_CHECKLIST.md](TOOLS_CHECKLIST.md)
+## 🌟 核心功能
+
+### 1. **多系统支持**
+- ✅ **macOS Terminal** (bash/zsh)
+- ✅ **Linux Terminal** (bash)
+- ✅ **iOS Terminal** (libimobiledevice)
+- ✅ **PowerShell** (Windows)
+
+### 2. **智能命令转换**
+- 自动在不同操作系统之间转换命令
+- 支持常用命令的跨平台翻译
+- 示例：`ls -la` (Linux) ↔ `Get-ChildItem -Force` (PowerShell)
+
+### 3. **路径管理**
+- 跨系统路径转换（POSIX ↔ Windows）
+- 统一路径管理接口
+- 自动处理路径分隔符
+
+### 4. **命令执行**
+- 同步/异步命令执行
+- 实时输出捕获
+- 错误处理和日志记录
+
+## 🚀 快速使用（终端自动化）
+
+### 安装
+
+```bash
+# 安装依赖
+pip install -r requirements.txt
+
+# 对于 iOS 支持（可选）
+brew install libimobiledevice  # macOS
+apt-get install libimobiledevice-utils  # Linux
+```
+
+### 基础使用
+
+```python
+from src.terminal_manager import TerminalManager
+
+# 创建终端管理器
+manager = TerminalManager()
+
+# macOS 执行命令
+result = manager.execute_on_macos("ls -la /Users")
+print(result)
+
+# Linux 执行命令
+result = manager.execute_on_linux("ps aux | grep python")
+print(result)
+
+# Windows PowerShell 执行命令
+result = manager.execute_on_powershell("Get-Process")
+print(result)
+
+# iOS 设备执行命令（需要 USB 连接）
+result = manager.execute_on_ios("ls -la /var/mobile")
+print(result)
+```
+
+### 命令转换示例
+
+```python
+from src.command_translator import CommandTranslator
+
+translator = CommandTranslator()
+
+# Linux → PowerShell
+linux_cmd = "ls -la /home/user"
+powershell_cmd = translator.linux_to_powershell(linux_cmd)
+# 输出: Get-ChildItem -Path C:\Users\user -Force
+
+# PowerShell → Linux
+ps_cmd = "Get-Process | Where-Object {$_.CPU -gt 50}"
+linux_cmd = translator.powershell_to_linux(ps_cmd)
+# 输出: ps aux | awk '$3 > 50'
+```
+
+### 完整示例
+
+查看示例文件：
+- `examples/basic_usage.py` - 基础用法
+- `examples/advanced_usage.py` - 高级用法
+- `main.py` - 完整演示
+
+## 📋 项目结构
+
+```
+ios-automation/
+├── # iOS AI 管理器 (Swift)
+├── Sources/
+│   └── iOSAutomation/
+│       ├── AIManager.swift              # AI 管理器
+│       ├── SecurityManager.swift        # 安全检测
+│       ├── NetworkManager.swift         # 网络管理
+│       └── TranslationManager.swift     # 翻译系统
+├── examples/
+│   ├── AIFixer/                         # AI Fixer 工具
+│   ├── AppIntents/                      # App Intents 示例
+│   ├── NetworkTools/                    # 网络工具
+│   └── ...                              # 其他示例
+├── docs/                                # iOS AI 完整文档
+│
+├── # 终端自动化系统 (Python)
+├── src/
+│   ├── terminal_manager.py              # 终端管理器
+│   ├── command_translator.py            # 命令转换器
+│   ├── macos_terminal.py                # macOS 终端
+│   ├── linux_terminal.py                # Linux 终端
+│   ├── ios_terminal.py                  # iOS 终端
+│   ├── powershell_terminal.py           # PowerShell 终端
+│   ├── path_manager.py                  # 路径管理
+│   └── terminal_base.py                 # 基类
+├── examples/
+│   ├── basic_usage.py                   # 基础示例
+│   └── advanced_usage.py                # 高级示例
+├── main.py                              # 主程序
+├── requirements.txt                     # Python 依赖
+│
+├── # 共享文档和配置
+├── README.md                            # 本文件
+├── .gitignore                           # Git 忽略文件
+└── .claude-project/                     # Claude 项目配置
+```
 
 ---
 
-## 📚 完整文档
+## 📚 完整文档 (iOS AI)
 
 ### 快速开始（3 个）
 - 📖 [QUICK_START_GUIDE.md](QUICK_START_GUIDE.md) - 5 分钟快速开始
@@ -119,21 +242,6 @@ dependencies: [
 - 📖 [docs/AI-Manager-Integration-Guide.md](docs/AI-Manager-Integration-Guide.md) - 完整集成指南
 - 📖 [docs/AI-Manager-Claude-App-Usage.md](docs/AI-Manager-Claude-App-Usage.md) - Claude App 使用方法
 
-### 重构文档（5 个）
-- 📖 [docs/Glue-Coding-Refactor-Plan.md](docs/Glue-Coding-Refactor-Plan.md) - 胶水编程重构计划
-- 📖 [docs/Refactor-01-Security-Detection.md](docs/Refactor-01-Security-Detection.md) - 安全检测重构
-- 📖 [docs/Refactor-02-Network-Management.md](docs/Refactor-02-Network-Management.md) - 网络管理重构
-- 📖 [docs/Refactor-03-Translation-System.md](docs/Refactor-03-Translation-System.md) - 翻译系统重构
-- 📖 [docs/Refactor-Summary-High-Priority.md](docs/Refactor-Summary-High-Priority.md) - 重构总结报告
-
-### 其他功能（6 个）
-- 📖 [docs/Kris-AI-Fixer-Guide.md](docs/Kris-AI-Fixer-Guide.md) - AI Fixer 完整指南
-- 📖 [docs/AI-Translation-Guide.md](docs/AI-Translation-Guide.md) - 翻译功能指南
-- 📖 [docs/VM-Detection-Bypass-Guide.md](docs/VM-Detection-Bypass-Guide.md) - 虚拟机检测指南
-- 📖 [docs/Shadowrocket-Setup-Guide.md](docs/Shadowrocket-Setup-Guide.md) - Shadowrocket 设置
-- 📖 [docs/Cloud-Mac-Guide.md](docs/Cloud-Mac-Guide.md) - 云端 Mac 指南
-- 📖 [docs/macOS-Environment-Setup-Guide.md](docs/macOS-Environment-Setup-Guide.md) - macOS 环境设置
-
 ### 项目信息（4 个）
 - 📖 [RELEASE_NOTES.md](RELEASE_NOTES.md) - v1.0.0 Release 说明
 - 📖 [TOOLS_CHECKLIST.md](TOOLS_CHECKLIST.md) - 完整工具清单
@@ -142,7 +250,26 @@ dependencies: [
 
 ---
 
-## 📊 性能改进统计
+## 🔧 技术栈
+
+### iOS AI 管理器
+- **语言**: Swift 5.9+
+- **平台**: iOS 16+, macOS 13+
+- **框架**: SwiftUI + SwiftData + App Intents
+- **并发**: Async/await, @MainActor
+- **依赖**: IOSSecuritySuite, Reachability.swift
+
+### 终端自动化系统
+- **语言**: Python 3.8+
+- **平台**: macOS, Linux, iOS, Windows
+- **依赖**: subprocess, pathlib, json, logging
+- **可选**: libimobiledevice (iOS 支持)
+
+---
+
+## 📊 性能统计
+
+### iOS AI 管理器改进
 
 | 模块 | 代码变化 | 性能改进 | 功能增加 |
 |------|----------|----------|----------|
@@ -151,315 +278,95 @@ dependencies: [
 | Translation Manager | **-15%** | **+80-90%** | iOS 17.4+ 离线翻译 |
 | **总计** | **-14.8%** | **+60%** | **新增 AI Manager** |
 
+### 终端自动化系统
+
+| 指标 | 数值 |
+|------|------|
+| 支持系统 | 4 个 |
+| 命令翻译器 | 30+ 命令 |
+| 路径转换 | POSIX ↔ Windows |
+| 执行模式 | 同步 + 异步 |
+
 ---
 
-## 🔧 技术栈
+## 🎯 使用场景
 
-- **Swift**: 5.9+
-- **平台**: iOS 16+, macOS 13+
-- **架构**: SwiftUI + SwiftData + App Intents
-- **并发**: Async/await, @MainActor
-- **依赖**: IOSSecuritySuite (2600+ ⭐), Reachability.swift (7900+ ⭐)
+### iOS AI 管理器
+- ✅ AI 自动化管理和监控
+- ✅ iOS 安全检测和保护
+- ✅ 网络管理和自动连接
+- ✅ 多语言翻译和本地化
+- ✅ Claude App 集成
+
+### 终端自动化系统
+- ✅ 跨平台自动化脚本
+- ✅ 远程设备管理（iOS/Android）
+- ✅ CI/CD 流水线集成
+- ✅ 系统管理和维护
+- ✅ 命令迁移和转换
 
 ---
 
-## 📋 项目结构
+## 📥 下载和安装
 
-```
-ios-automation/
-├── docs/                                       # 文档目录
-│   └── iOS-Automation-Complete-Guide.md       # 完整开发指南（70+ 页）
-├── examples/                                   # 示例代码
-│   ├── AppIntents/                            # App Intents 示例
-│   │   ├── AddTaskIntent.swift                # 添加任务 Intent
-│   │   ├── GetTasksIntent.swift               # 获取任务列表 Intent
-│   │   ├── GetTodayTasksIntent.swift          # 获取今日任务 Intent
-│   │   ├── TaskStatsIntent.swift              # 任务统计 Intent
-│   │   └── CompleteTaskIntent.swift           # 完成任务 Intent
-│   ├── AppEntryPoint/                         # App 入口示例
-│   │   └── AutomationHelperApp.swift          # 完整的 App 入口文件
-│   ├── Models/                                # 数据模型
-│   │   └── Task.swift                         # 任务模型（SwiftData）
-│   ├── URLHandler/                            # URL Scheme 处理
-│   │   └── URLHandler.swift                   # URL 处理器
-│   ├── XcodeProject/                          # Xcode 项目配置
-│   │   └── Info.plist                         # Info.plist 配置示例
-│   └── Shortcuts/                             # 快捷指令示例
-│       └── shortcuts-examples.md              # 快捷指令配置示例
-├── QUICKSTART.md                              # 快速开始指南（15分钟上手）
-├── TROUBLESHOOTING.md                         # 故障排查指南
-├── CODE_VERIFICATION.md                       # 代码验证清单
-└── README.md                                  # 项目说明（本文件）
+### iOS AI 管理器
+
+```bash
+# 克隆仓库（iOS AI 管理器）
+git clone -b claude/ios-automation-shortcuts-gsEpf \
+  https://github.com/krisliong1/ios-automation.git
 ```
 
-## 🚀 快速开始
+查看完整安装指南：[DOWNLOAD_AND_INSTALL.md](DOWNLOAD_AND_INSTALL.md)
 
-### 1. 阅读完整指南
+### 终端自动化系统
 
-查看 [iOS 自动化完整指南](docs/iOS-Automation-Complete-Guide.md)，包含：
+```bash
+# 克隆仓库（终端自动化）
+git clone -b claude/explore-codebase-eLmge \
+  https://github.com/krisliong1/ios-automation.git
 
-- ✅ **Xcode 项目创建** - 从零开始构建 iOS 应用
-- ✅ **快捷指令动作参考** - 100+ 个动作详细说明
-- ✅ **集成方法** - App Intents 和 URL Scheme 完整教程
-- ✅ **实战案例** - 5 个真实场景示例
-- ✅ **最佳实践** - 性能优化、调试技巧、FAQ
+# 安装依赖
+cd ios-automation
+pip install -r requirements.txt
 
-### 2. 15 分钟快速上手
-
-**推荐路径**：跟随 [快速开始指南](QUICKSTART.md) 在 15 分钟内创建第一个 iOS 自动化应用！
-
-### 3. 使用示例代码
-
-所有示例代码位于 `examples/` 目录：
-
-#### App Intents 示例（5 个完整实现）
-
-```swift
-// 复制到你的 Xcode 项目中
-examples/AppIntents/AddTaskIntent.swift         // 添加任务功能
-examples/AppIntents/GetTasksIntent.swift        // 获取任务列表
-examples/AppIntents/GetTodayTasksIntent.swift   // 获取今日任务
-examples/AppIntents/TaskStatsIntent.swift       // 任务统计
-examples/AppIntents/CompleteTaskIntent.swift    // 完成任务
+# 运行演示
+python main.py
 ```
 
-**使用步骤**:
-1. 在 Xcode 中创建新项目
-2. 复制所有示例文件到项目
-3. 配置 Info.plist（可选，用于 URL Scheme）
-4. 运行项目（⌘ + R）
-5. 打开快捷指令 App，搜索你的 App 名称
-6. 开始使用！
-
-详细步骤见 [快速开始指南](QUICKSTART.md)
-
-#### URL Scheme 示例
-
-```swift
-// URL 处理器
-examples/URLHandler/URLHandler.swift
-```
-
-**配置 URL Scheme**:
-1. Xcode → Target → Info → URL Types
-2. 添加 URL Scheme: `automationhelper`
-3. 集成 URLHandler 到你的 App
-
-### 4. 快捷指令示例
-
-查看 [快捷指令配置示例](examples/Shortcuts/shortcuts-examples.md)，包含：
-
-- 快速添加任务
-- 每日任务播报
-- 批量完成任务
-- 任务统计报告
-- URL Scheme 调用模板
-
-## 🆘 需要帮助？
-
-- **刚开始？** 查看 [快速开始指南](QUICKSTART.md)（15 分钟上手）
-- **遇到问题？** 查看 [故障排查指南](TROUBLESHOOTING.md)
-- **验证代码？** 查看 [代码验证清单](CODE_VERIFICATION.md)
-
-## 📖 主要内容
-
-### 完整指南包含的章节
-
-#### 第一部分：Xcode 项目创建
-
-- 环境准备和安装
-- 创建新项目（GUI 和命令行）
-- 项目结构详解
-- 添加基础功能
-- 运行和测试
-- 部署到真机
-
-#### 第二部分：iOS 快捷指令动作参考
-
-10+ 个分类，100+ 个动作：
-
-- 🤖 **AI 与智能** - ChatGPT、OCR、语音识别
-- 📝 **文本处理** - 格式化、翻译、正则匹配
-- 📁 **文件操作** - 读写、压缩、云存储
-- 📧 **通讯** - 邮件、短信、电话
-- 📸 **照片相机** - 拍照、编辑、识别
-- 🌐 **网络请求** - HTTP、API、网页操作
-- 📅 **日历提醒** - 事件、提醒、日程
-- 🗺️ **地图位置** - 定位、导航、地理编码
-- 📊 **数据计算** - 数学、统计、日期
-- 🔧 **系统设置** - Wi-Fi、蓝牙、音量
-
-#### 第三部分：Xcode 与快捷指令集成
-
-**App Intents（推荐）**:
-- 完整实现代码
-- 参数定义和验证
-- 返回值处理
-- Siri 集成
-
-**URL Scheme（传统方法）**:
-- URL 注册和配置
-- 参数解析
-- 错误处理
-- 实用工具函数
-
-#### 第四部分：实战场景
-
-5 个完整的实战案例：
-
-1. **批量发送生日祝福** - 联系人 + ChatGPT
-2. **工作日自动签到** - 位置 + API 调用
-3. **智能费用记录** - OCR + AI 分类
-4. **健康数据云端同步** - HealthKit + 服务器
-5. **会议笔记自动整理** - 语音转文字 + AI 总结
-
-#### 第五部分：最佳实践
-
-- 开发最佳实践
-- 性能优化技巧
-- 调试方法
-- 常见问题 FAQ
-
-## 💡 使用场景
-
-### 个人效率
-
-- ✅ 任务管理自动化
-- ✅ 智能提醒和播报
-- ✅ 自动记账和统计
-- ✅ 健康数据追踪
-
-### 工作自动化
-
-- ✅ 自动打卡签到
-- ✅ 会议记录整理
-- ✅ 报表自动生成
-- ✅ 邮件批量处理
-
-### 生活助手
-
-- ✅ 生日祝福提醒
-- ✅ 出行路线规划
-- ✅ 费用智能分类
-- ✅ 照片自动整理
-
-## 🛠️ 技术栈
-
-### iOS 开发
-
-- **语言**: Swift 5.9+
-- **框架**: SwiftUI, SwiftData
-- **iOS 版本**: iOS 17.0+
-- **Xcode**: 15.0+
-
-### 快捷指令
-
-- **iOS 快捷指令 App**
-- **App Intents** (iOS 16+)
-- **URL Scheme** (所有版本)
-
-### 集成服务
-
-- HealthKit - 健康数据
-- CoreLocation - 定位服务
-- Vision - OCR 文字识别
-- Speech - 语音识别
-- UserNotifications - 通知
-
-## 📋 前置要求
-
-### 硬件
-
-- Mac（运行 macOS 14.0+）
-- iPhone/iPad（iOS 17.0+，用于测试）
-
-### 软件
-
-- Xcode 15.0 或更高版本
-- iOS 快捷指令 App
-
-### 账号
-
-- Apple ID（免费账号即可）
-- Apple Developer 账号（可选，用于真机部署）
-
-## 🎯 学习路径
-
-### 初级（1-2 天）
-
-1. ✅ 阅读指南第一部分 - 熟悉 Xcode
-2. ✅ 创建第一个 iOS 项目
-3. ✅ 阅读指南第二部分 - 了解快捷指令动作
-4. ✅ 创建简单的快捷指令
-
-### 中级（3-5 天）
-
-1. ✅ 学习 App Intents 集成
-2. ✅ 实现简单的 Intent
-3. ✅ 在快捷指令中调用
-4. ✅ 尝试实战案例 1-2 个
-
-### 高级（1-2 周）
-
-1. ✅ 掌握 SwiftData 数据持久化
-2. ✅ 实现复杂的业务逻辑
-3. ✅ 集成第三方 API
-4. ✅ 完成所有实战案例
-5. ✅ 发布自己的自动化工具
-
-## 🔗 相关资源
-
-### 官方文档
-
-- [Apple Developer - Shortcuts](https://developer.apple.com/documentation/shortcuts)
-- [App Intents 文档](https://developer.apple.com/documentation/appintents)
-- [SwiftUI 教程](https://developer.apple.com/tutorials/swiftui)
-- [SwiftData 文档](https://developer.apple.com/documentation/swiftdata)
-
-### 工具推荐
-
-- [Xcodegen](https://github.com/yonaskolb/XcodeGen) - 项目生成工具
-- [SwiftLint](https://github.com/realm/SwiftLint) - 代码规范检查
-- [SF Symbols](https://developer.apple.com/sf-symbols/) - 系统图标库
-
-### 社区
-
-- [Swift Forums](https://forums.swift.org/)
-- [r/shortcuts](https://www.reddit.com/r/shortcuts/)
-- [r/iOSProgramming](https://www.reddit.com/r/iOSProgramming/)
+---
 
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
 
-### 如何贡献
+### 开发分支
+- `claude/ios-automation-shortcuts-gsEpf` - iOS AI 管理器主分支
+- `claude/explore-codebase-eLmge` - 终端自动化主分支
 
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 开启 Pull Request
+---
 
 ## 📝 许可证
 
 本项目仅供学习交流使用。
 
-## 📮 联系方式
-
-如有问题或建议，欢迎通过 Issue 反馈。
-
 ---
 
-## 🎉 开始你的 iOS 自动化之旅！
+## 🎉 快速开始
 
-1. 📖 阅读 [完整指南](docs/iOS-Automation-Complete-Guide.md)
-2. 💻 复制 [示例代码](examples/)
-3. ⚡ 创建你的第一个自动化快捷指令
-4. 🚀 分享你的创作！
+### iOS AI 管理器（5 分钟）
+1. 📖 阅读 [QUICK_START_GUIDE.md](QUICK_START_GUIDE.md)
+2. 💻 下载 iOS 工具
+3. 🚀 在 Claude App 中使用
+
+### 终端自动化（2 分钟）
+1. 📦 安装依赖：`pip install -r requirements.txt`
+2. 💻 查看示例：`python examples/basic_usage.py`
+3. 🚀 运行演示：`python main.py`
+
+---
 
 **祝你开发愉快！** 🎊
 
----
-
-**最后更新**: 2026-01-17
-**版本**: 1.0
+**最后更新**: 2026-01-20
+**版本**: iOS AI v1.0.0 | Terminal Auto v1.0.0
