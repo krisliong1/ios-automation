@@ -1,0 +1,58 @@
+// swift-tools-version: 5.9
+import PackageDescription
+
+let package = Package(
+    name: "iOSAutomation",
+    
+    platforms: [
+        .iOS(.v16),
+        .macOS(.v13),
+        .watchOS(.v9),
+        .tvOS(.v16)
+    ],
+    
+    products: [
+        .library(name: "iOSAutomation", targets: ["iOSAutomation"]),
+        .executable(name: "AutomationCLI", targets: ["AutomationCLI"])
+    ],
+    
+    dependencies: [
+        // ✅ 只在支持的平台上使用
+        .package(url: "https://github.com/securing/IOSSecuritySuite", from: "1.9.0"),
+        .package(url: "https://github.com/ashleymills/Reachability.swift", from: "5.2.0"),
+        // ✅ 移除不存在的 SwiftBluetooth
+    ],
+    
+    targets: [
+        .target(
+            name: "iOSAutomation",
+            dependencies: [
+                // ✅ IOSSecuritySuite 只支持 iOS 和 macOS
+                .product(
+                    name: "IOSSecuritySuite", 
+                    package: "IOSSecuritySuite",
+                    condition: .when(platforms: [.iOS, .macOS])
+                ),
+                // ✅ Reachability 支持所有平台
+                .product(name: "Reachability", package: "Reachability.swift"),
+            ],
+            path: "Sources/iOSAutomation",
+            swiftSettings: [
+                // ✅ 启用严格并发检查
+                .enableUpcomingFeature("StrictConcurrency"),
+            ]
+        ),
+        
+        .executableTarget(
+            name: "AutomationCLI",
+            dependencies: ["iOSAutomation"],
+            path: "Sources/AutomationCLI"
+        ),
+        
+        .testTarget(
+            name: "iOSAutomationTests",
+            dependencies: ["iOSAutomation"],
+            path: "Tests"
+        ),
+    ]
+)
